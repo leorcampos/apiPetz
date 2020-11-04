@@ -17,10 +17,12 @@ import testePratico.apiPetz.framework.util.ObjectConvert;
 
 public abstract class AbstractRestController<T, ID extends Serializable> implements RestController<T, ID>{
 
-	protected Class<Object> clazz;
+	protected Class<?> clazz;
+	protected String baseUrl;
 	
 	@PostMapping
 	protected ResponseEntity<?> create(@RequestBody T entity){
+		System.out.println("entrou aqui " + entity.getClass());
 		service().save(entity);
 		return ResponseEntity.status(HttpStatus.CREATED).body(ObjectConvert.parserObjeto(entity, getClazz()));
 	}
@@ -40,16 +42,17 @@ public abstract class AbstractRestController<T, ID extends Serializable> impleme
 	@GetMapping(value="/{id}")
 	protected ResponseEntity<?> find (@PathVariable("id") ID id){
 		T entity = service().findById(id);
-		return ResponseEntity.status(HttpStatus.OK).body(ObjectConvert.parserObjeto(entity, getClazz()));
+		var objeto = ObjectConvert.parserObjeto(entity, getClazz());
+		return ResponseEntity.status(HttpStatus.OK).body(objeto);
 	}
 	
 	@GetMapping
 	protected ResponseEntity<List<?>> find (){
-		List<?> list = ObjectConvert.parserListObjeto(service().findAll(), getClazz());
+		List<?> list = (List<?>) ObjectConvert.parserListObjeto(service().findAll(), getClazz());
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 	
-	protected Class<?> getClazz(){
+	protected Class <?> getClazz(){
 		return clazz;
 	}
 	
