@@ -1,6 +1,7 @@
 package testePratico.apiPetz.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import testePratico.apiPetz.api.domain.Pet;
@@ -9,6 +10,7 @@ import testePratico.apiPetz.framework.controller.AbstractRestController;
 import testePratico.apiPetz.framework.service.Service;
 
 @RestController
+@RequestMapping(PetRestController.BASE_URL)
 public class PetRestController extends AbstractRestController<Pet, Integer> {
 
 	static final String BASE_URL = "/pet";

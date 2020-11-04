@@ -18,7 +18,6 @@ import testePratico.apiPetz.framework.util.ObjectConvert;
 public abstract class AbstractRestController<T, ID extends Serializable> implements RestController<T, ID>{
 
 	protected Class<Object> clazz;
-	protected String baseURL;
 	
 	@PostMapping
 	protected ResponseEntity<?> create(@RequestBody T entity){
