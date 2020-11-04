@@ -10,6 +10,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.transaction.Transactional;
 
+import testePratico.apiPetz.framework.util.ObjectNotFoundException;
+
 
 public abstract class ServiceImpl<E, ID extends Serializable> implements Service<E, ID> {
 
@@ -31,10 +33,10 @@ public abstract class ServiceImpl<E, ID extends Serializable> implements Service
 		return getDao().findAll();
 	}
 	
-	/*public E findById(ID id) {
-		Optional optional = getDao().findById(id);
+	public E findById(ID id) {
+		Optional<E> optional = getDao().findById(id);
 		return optional.orElseThrow(() -> new ObjectNotFoundException("Dado não encontrado!: Id: " + id));
-	}*/
+	}
 	
 	@Transactional
 	public E save(E entity) {
