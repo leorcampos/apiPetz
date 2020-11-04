@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import testePratico.apiPetz.api.controller.dto.ClienteDTO;
 import testePratico.apiPetz.api.domain.Cliente;
 import testePratico.apiPetz.api.service.impl.ClienteServiceImp;
 import testePratico.apiPetz.framework.controller.AbstractRestController;
@@ -20,6 +21,11 @@ public class ClienteRestController extends AbstractRestController<Cliente, Integ
 	@Override
 	public Service<Cliente, Integer> service() {
 		return clienteServiceImp;
+	}
+	
+	@Override 
+	public Class<ClienteDTO>getClazz(){
+		return ClienteDTO.class;
 	}
 	
 	@Override
