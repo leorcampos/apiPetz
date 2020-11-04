@@ -20,31 +20,31 @@ public abstract class AbstractRestController<T, ID extends Serializable> impleme
 	protected Class<Object> clazz;
 	protected String baseURL;
 	
-	@PostMapping
+	@PostMapping(value="/claims")
 	protected ResponseEntity<?> create(@RequestBody T entity){
 		service().save(entity);
 		return ResponseEntity.status(HttpStatus.CREATED).body(ObjectConvert.parserObjeto(entity, getClazz()));
 	}
 	
-	@PutMapping(value="/update")
+	@PutMapping(value="/claims")
 	protected ResponseEntity<?> update(@RequestBody T entity){
 		service().merge(entity);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 	}
 	
-	@DeleteMapping(value="{id}/delete")
+	@DeleteMapping(value="/claims/{id}")
 	protected ResponseEntity<Void> delete(@PathVariable("id") ID id, RedirectAttributes redirectAttributes){
 		service().delete(id);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 	}
 	
-	@GetMapping(value="{id}")
+	@GetMapping(value="/claims/{id}")
 	protected ResponseEntity<?> find (@PathVariable("id") ID id){
 		T entity = service().findById(id);
 		return ResponseEntity.status(HttpStatus.OK).body(ObjectConvert.parserObjeto(entity, getClazz()));
 	}
 	
-	@GetMapping(value="{id}")
+	@GetMapping
 	protected ResponseEntity<List<?>> find (){
 		List<?> list = ObjectConvert.parserListObjeto(service().findAll(), getClazz());
 		return ResponseEntity.status(HttpStatus.OK).body(list);
