@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.transaction.Transactional;
 
-import testePratico.apiPetz.framework.util.ObjectNotFoundException;
+import testePratico.apiPetz.framework.exception.ObjectNotFoundException;
 
 
 public abstract class ServiceImpl<E, ID extends Serializable> implements Service<E, ID> {

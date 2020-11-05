@@ -13,23 +13,25 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import testePratico.apiPetz.api.mapper.DomainMapper;
 import testePratico.apiPetz.framework.util.ObjectConvert;
 
-public abstract class AbstractRestController<T, ID extends Serializable> implements RestController<T, ID>{
+public abstract class AbstractRestController<E, T, ID extends Serializable> implements RestController<E, ID>{
 
+	
 	protected Class<?> clazz;
 	protected String baseUrl;
 	
 	@PostMapping
-	protected ResponseEntity<?> create(@RequestBody T entity){
-		System.out.println("entrou aqui " + entity.getClass());
-		service().save(entity);
-		return ResponseEntity.status(HttpStatus.CREATED).body(ObjectConvert.parserObjeto(entity, getClazz()));
+	protected ResponseEntity<?> create(@RequestBody T dto){
+		var domain = getMapper().toDomain(dto);
+		service().save(domain);
+		return ResponseEntity.status(HttpStatus.CREATED).body(getMapper().fromDomain(domain));
 	}
 	
 	@PutMapping(value="/{id}")
-	protected ResponseEntity<?> update(@RequestBody T entity){
-		service().merge(entity);
+	protected ResponseEntity<?> update(@RequestBody T dto){
+		service().merge(getMapper().toDomain(dto));
 		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 	}
 	
@@ -41,7 +43,7 @@ public abstract class AbstractRestController<T, ID extends Serializable> impleme
 	
 	@GetMapping(value="/{id}")
 	protected ResponseEntity<?> find (@PathVariable("id") ID id){
-		T entity = service().findById(id);
+		T entity = getMapper().fromDomain((E) service().findById(id));
 		var objeto = ObjectConvert.parserObjeto(entity, getClazz());
 		return ResponseEntity.status(HttpStatus.OK).body(objeto);
 	}
@@ -59,4 +61,6 @@ public abstract class AbstractRestController<T, ID extends Serializable> impleme
 	protected String getBaseURL() {
 		return clazz.getSimpleName().toLowerCase();
 	}
+	
+	protected abstract DomainMapper<E, T> getMapper();
 }

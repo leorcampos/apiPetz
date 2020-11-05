@@ -7,6 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor@AllArgsConstructor@Builder
 @Entity
 @SequenceGenerator(name="pet_seq", sequenceName="pet_sequence", allocationSize=1)
 public class Pet {
@@ -20,9 +27,9 @@ public class Pet {
 	@Column(name="nome_pet")
 	private String nome;
 	
-	@Column(name="especie")
-	private String especie;
+	@Column(name="tipo")
+	private String tipo;
 	
-	@Column(name="animal")
-	private String animal;
+	@Column(name="idade")
+	private Integer idade;
 }

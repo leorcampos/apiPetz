@@ -2,6 +2,13 @@ package testePratico.apiPetz.api.controller.dto;
 
 import java.io.Serializable;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PetDTO implements Serializable{
 
 	/**
@@ -11,31 +18,7 @@ public class PetDTO implements Serializable{
 
 	private Integer id;
 	private String nome;
-	private String especie; 
-	private String animal;
+	private String tipo; 
+	private Integer idade;
 	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	public String getEspecie() {
-		return especie;
-	}
-	public void setEspecie(String especie) {
-		this.especie = especie;
-	}
-	public String getAnimal() {
-		return animal;
-	}
-	public void setAnimal(String animal) {
-		this.animal = animal;
-	}
 }
